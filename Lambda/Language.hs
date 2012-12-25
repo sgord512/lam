@@ -8,6 +8,10 @@ import Util.Numeric ( subscriptNumber, superscriptNumber )
 lambda :: String
 lambda = '\x03BB':[]
 
+topLeftQuineCorner = '\x231C'
+topRightQuineCorner = '\x231D'
+
+
 data Delimiter = SquareBracket
                | Parenthesis 
                | CurlyBracket 

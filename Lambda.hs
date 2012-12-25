@@ -17,6 +17,16 @@ normalForm :: Term -> Term
 normalForm t = case step t of
   (LamC v b) -> (LamC v b)
   t' -> normalForm t'
+  
+alphaEquivalent :: Term -> Term -> Bool
+alphaEquivalent (AppC f a) (AppC f' a') = (alphaEquivalent f f') && (alphaEquivalent a a')
+alphaEquivalent (LamC v b) (LamC v' b') = 
+  if v == v' 
+  then alphaEquivalent b b'
+  else alphaEquivalent b $ subst (IdC v) v' b' 
+alphaEquivalent (IdC v) (IdC v') = v == v'
+alphaEquivalent _ _ = False
+  
                        
 combinators = Map.fromList [("y", let half = LamC (v 'x') $ AppC (idV 'f') $ AppC (idV 'x') (idV 'x') 
                                   in LamC (v 'f') $ AppC half half),
@@ -25,3 +35,10 @@ combinators = Map.fromList [("y", let half = LamC (v 'x') $ AppC (idV 'f') $ App
                        
 combinator :: String -> Term
 combinator str = (Map.!) combinators str 
+
+churchNumeral :: Integer -> Term
+churchNumeral n = LamC (v 'f') (LamC (v 'x') $ cn n)
+  where cn :: Integer -> Term
+        cn 0 = (idV 'x')
+        cn n = AppC (idV 'f') $ cn (n - 1)
+
