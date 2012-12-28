@@ -11,7 +11,6 @@ lambda = '\x03BB':[]
 topLeftQuineCorner = '\x231C'
 topRightQuineCorner = '\x231D'
 
-
 data Delimiter = SquareBracket
                | Parenthesis 
                | CurlyBracket 
@@ -38,7 +37,9 @@ instance Show Var where
   show (Var c sub) = (c:[]) ++ (maybe "" show sub)
 
 data Term = AppC Term Term | LamC Var Term | IdC Var
-data Value = LamV Var Term
+-- data Record = Record Label Value
+-- data Value = Value Term
+
 type FV = Set Var
 type BV = Set Var
 

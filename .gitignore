@@ -1,2 +1,4 @@
 *.hi
 *.o
+lam
+lam-hs
